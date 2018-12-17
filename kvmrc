@@ -4,6 +4,11 @@
 # Dec 17,2018
 #
 
+# env
+
+DISKPATH=/var/lib/libvirt/images
+IMGPATH=/var/lib/libvirt/boot
+
 # kvm vm
 
 OS_VERSION=centos-7.6
