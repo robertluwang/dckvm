@@ -23,7 +23,7 @@ if [ ! -z $vmstate ];then
         virsh undefine $VM
     fi
 
-    rm -f /var/lib/libvirt/images/$VM.qcow2
+    rm -f $DISKPATH/$VM.qcow2
 
     echo $VM deleted, will create it now
 
@@ -33,11 +33,11 @@ fi
 
 # prepare bootable image
 
-if [ -f /var/lib/libvirt/boot/${OS_VERSION}-$DISKSIZE.img ]; then
-    cp /var/lib/libvirt/boot/${OS_VERSION}-$DISKSIZE.img /var/lib/libvirt/images/$VM.qcow2
+if [ -f $IMGPATH/${OS_VERSION}-$DISKSIZE.img ]; then
+    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.img $DISKPATH/$VM.qcow2
 else
     sh $dckvm/kvm_image_build.sh
-    cp /var/lib/libvirt/boot/${OS_VERSION}-$DISKSIZE.img /var/lib/libvirt/images/$VM.qcow2
+    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.img $IMGPATH/$VM.qcow2
 fi
 
 # create new vm by importing bootable image
