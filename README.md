@@ -19,6 +19,11 @@ kvm_vm_create.sh - launch kvm vm instance using bootable kvm image
 ### prepare setting in kvmrc
 
 ```
+# env
+
+DISKPATH=/var/lib/libvirt/images
+IMGPATH=/var/lib/libvirt/boot
+
 # kvm vm
 
 OS_VERSION=centos-7.6
