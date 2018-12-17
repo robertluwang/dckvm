@@ -91,6 +91,9 @@ undercloud is running now
  Id    Name                           State
 ----------------------------------------------------
  22    undercloud                     running
+
+[root@tripleo tmp]# virsh console 22
+
 ```
 
 ## verify kvm vm 
