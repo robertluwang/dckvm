@@ -45,9 +45,9 @@ fi
 virt-install --import --name $VM \
 --ram $RAM \
 --vcpu $VCPU \
---disk path=/var/lib/libvirt/images/$VM.qcow2 \
---network network=default \
---network network=provision \
+--disk path=$DISKPATH/$VM.qcow2 \
+--network network=$NET_NAT \
+--network network=$NET_PROVISION \
 --nographics --serial=pty --os-type=linux --os-variant $OS_VARIANT \
 --noautoconsole --noreboot
 
