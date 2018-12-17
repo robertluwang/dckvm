@@ -1,0 +1,32 @@
+# kvmrc
+# env setting for dreamcloud kvm tool
+# Robert Wang @github.com/robertluwang
+# Dec 17,2018
+#
+
+# kvm vm
+
+OS_VERSION=centos-7.6
+OS_VARIANT=rhel7
+VM=undercloud
+RAM=2048
+DISKSIZE=80G
+VCPU=1
+VM_HOSTNAME=undercloud
+TZ=America/New_York
+ROOTPW=shroot
+
+# kvm network
+
+NET_NAT=default
+NET_NAT_BRIDGE=virbr0
+NET_NAT_IF=192.168.122.1
+NET_NAT_IP=192.168.122.90
+NET_NAT_MASK=255.255.255.0
+NET_NAT_DHCP=192.168.122.128,192.168.122.254
+NET_PROVISION=provision
+NET_PROVISION_BRIDGE=virbr1
+NET_PROVISION_IF=192.168.126.2
+NET_PROVISION_IP=192.168.126.1
+NET_PROVISION_MASK=255.255.255.0
+NET_PROVISION_DHCP=192.168.126.100,192.168.126.254
