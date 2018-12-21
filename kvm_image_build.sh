@@ -9,8 +9,8 @@ dckvm=`dirname "$0"`
 source $dckvm/kvmrc
 
 virt-builder $OS_VERSION \
---size=$DISKSIZE -o $IMGPATH/${OS_VERSION}-$DISKSIZE.img \
---network --timezone=$TZ \
+--size $DISKSIZE -o $IMGPATH/${OS_VERSION}-$DISKSIZE.img \
+--network --timezone $TZ \
 --root-password password:$ROOTPW \
 --firstboot-command "sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config; systemctl stop NetworkManager; systemctl disable NetworkManager; systemctl restart network"
 
