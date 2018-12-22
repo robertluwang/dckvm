@@ -65,8 +65,13 @@ virsh net-start $NET_NAT
 virsh net-start $NET_PROVISION
 
 # show up the network
+echo
+echo network generated ...
+echo
 echo default network
 virsh net-list --all | grep $NET_NAT
 
 echo provision network
 virsh net-list --all | grep $NET_PROVISION
+echo
+
