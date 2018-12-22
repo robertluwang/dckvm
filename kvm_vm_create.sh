@@ -45,7 +45,7 @@ fi
 virt-install --import --name $VM \
 --ram $RAM \
 --vcpu $VCPU \
---disk path=$DISKPATH/$VM.qcow2 \
+--disk path=$DISKPATH/$VM.qcow2,device=disk,format=qcow2 \
 --network network=$NET_NAT \
 --network network=$NET_PROVISION \
 --nographics --serial=pty --os-type=linux --os-variant $OS_VARIANT \
