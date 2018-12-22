@@ -28,11 +28,11 @@ IMGPATH=/var/lib/libvirt/boot
 
 OS_VERSION=centos-7.6
 OS_VARIANT=rhel7
-VM=undercloud
+VM=testvm
 RAM=2048
 DISKSIZE=80G
 VCPU=1
-VM_HOSTNAME=undercloud
+VM_HOSTNAME=testvm
 TZ=America/New_York
 ROOTPW=shroot
 
@@ -57,69 +57,95 @@ NET_PROVISION_DHCP=192.168.126.100,192.168.126.254
 If vm instance existing, will delete it at first.
 
 ```
-[root@tripleo tmp]# /root/dckvm/kvm_vm_create.sh
-undercloud existing, will delete it now
-Domain undercloud destroyed
-
-Domain undercloud has been undefined
-
-undercloud deleted, will create it now
-[   2.9] Downloading: http://libguestfs.org/download/builder/centos-7.6.xz
-[   4.8] Planning how to build this image
-[   4.8] Uncompressing
-[  20.9] Resizing (using virt-resize) to expand the disk to 80.0G
-[  92.4] Opening the new disk
-[  98.5] Setting a random seed
-[  98.5] Setting the timezone: America/New_York
-[  98.6] Installing firstboot command: sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config; systemctl stop NetworkManager; systemctl disable NetworkManager; systemctl restart network
-[  98.6] Setting passwords
-[ 100.3] Finishing off
-                   Output file: /var/lib/libvirt/boot/centos-7.6-80G.img
-                   Output size: 80.0G
+# /usr/share/dckvm/kvm_image_build.sh
+[   3.4] Downloading: http://libguestfs.org/download/builder/centos-7.6.xz
+[  15.9] Planning how to build this image
+[  15.9] Uncompressing
+[  31.5] Resizing (using virt-resize) to expand the disk to 20.0G
+[ 159.8] Opening the new disk
+[ 167.0] Setting a random seed
+[ 167.0] Setting the timezone: America/New_York
+[ 167.1] Installing firstboot command: sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config; systemctl stop NetworkManager; systemctl disable NetworkManager; systemctl restart network
+[ 167.1] Setting passwords
+[ 169.4] Finishing off
+                   Output file: /var/lib/libvirt/boot/centos-7.6-20G.img
+                   Output size: 20.0G
                  Output format: raw
-            Total usable space: 79.4G
-                    Free space: 78.3G (98%)
+            Total usable space: 19.4G
+                    Free space: 18.3G (94%)
+[   0.0] Examining the guest ...
+[   4.3] Performing "abrt-data" ...
+[   4.3] Performing "backup-files" ...
+[   6.3] Performing "bash-history" ...
+[   6.3] Performing "blkid-tab" ...
+[   6.4] Performing "crash-data" ...
+[   6.4] Performing "cron-spool" ...
+[   6.5] Performing "dhcp-client-state" ...
+[   6.5] Performing "dhcp-server-state" ...
+[   6.5] Performing "dovecot-data" ...
+[   6.5] Performing "logfiles" ...
+[   6.5] Performing "machine-id" ...
+[   6.5] Performing "mail-spool" ...
+[   6.5] Performing "net-hostname" ...
+[   6.5] Performing "net-hwaddr" ...
+[   6.6] Performing "pacct-log" ...
+[   6.6] Performing "package-manager-cache" ...
+[   6.6] Performing "pam-data" ...
+[   6.6] Performing "passwd-backups" ...
+[   6.6] Performing "puppet-data-log" ...
+[   6.6] Performing "rh-subscription-manager" ...
+[   6.6] Performing "rhn-systemid" ...
+[   6.6] Performing "rpm-db" ...
+[   6.6] Performing "samba-db-log" ...
+[   6.6] Performing "script" ...
+[   6.6] Performing "smolt-uuid" ...
+[   6.6] Performing "ssh-hostkeys" ...
+[   6.6] Performing "ssh-userdir" ...
+[   6.7] Performing "sssd-db-log" ...
+[   6.7] Performing "tmp-files" ...
+[   6.7] Performing "udev-persistent-net" ...
+[   6.7] Performing "utmp" ...
+[   6.7] Performing "yum-uuid" ...
+[   6.8] Performing "customize" ...
+[   6.8] Setting a random seed
+[   6.8] Setting the machine ID in /etc/machine-id
+[   6.8] Performing "lvm-uuids" ...
+
+
+# /usr/share/dckvm/kvm_vm_create.sh
+error: failed to get domain 'testvm'
+error: Domain not found: no domain with matching name 'testvm'
+testvm not existing, will create it now
 
 Starting install...
 Domain creation completed.
 You can restart your domain by running:
-  virsh --connect qemu:///system start undercloud
+  virsh --connect qemu:///system start testvm
 [   0.0] Examining the guest ...
-[   5.5] Setting a random seed
-[   5.5] Setting the hostname: undercloud
-[   5.5] Installing firstboot script: /root/dckvm/kvm_post_undercloud.sh
-[   5.6] Finishing off
-Domain undercloud started
+[   6.6] Setting a random seed
+[   6.6] Setting the hostname: testvm
+[   6.6] Installing firstboot script: ./kvm_post_testvm.sh
+[   6.8] Finishing off
+Domain testvm started
 
-undercloud is running now
-[root@tripleo tmp]# virsh list --all
- Id    Name                           State
-----------------------------------------------------
- 22    undercloud                     running
+testvm is running now
 
-[root@tripleo tmp]# virsh console 22
-
+virsh list --all
+virsh console testvm 
 ```
 
 ## verify kvm vm 
 ### vm size 
 ```
-[root@undercloud ~]# df -h
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/vda4        79G  994M   78G   2% /
-devtmpfs        909M     0  909M   0% /dev
-tmpfs           920M     0  920M   0% /dev/shm
-tmpfs           920M   17M  903M   2% /run
-tmpfs           920M     0  920M   0% /sys/fs/cgroup
-/dev/vda2      1014M  137M  878M  14% /boot
-tmpfs           184M     0  184M   0% /run/user/0
+# df -h
+
 ```
 ### NIC 
 - two NIC up
 - eth0 192.168.122.90 for NAT 
 - eth1 192.168.126.1 for privision/hostonly 
 ```
-[root@undercloud ~]# ip a
+# ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -138,7 +164,7 @@ tmpfs           184M     0  184M   0% /run/user/0
        valid_lft forever preferred_lft forever
     inet6 fe80::5054:ff:fef1:e46d/64 scope link
        valid_lft forever preferred_lft forever
-[root@undercloud ~]# ip r
+# ip r
 default via 192.168.122.1 dev eth0
 169.254.0.0/16 dev eth0 scope link metric 1002
 169.254.0.0/16 dev eth1 scope link metric 1003
@@ -148,12 +174,12 @@ default via 192.168.122.1 dev eth0
 ### Internet access
 
 ```
-[root@undercloud ~]# cat /etc/resolv.conf
+# cat /etc/resolv.conf
 # Generated by NetworkManager
 nameserver 192.168.122.1
 nameserver 8.8.8.8
 
-[root@undercloud ~]# ping google.ca
+# ping google.ca
 PING google.ca (74.125.21.94) 56(84) bytes of data.
 64 bytes from yv-in-f94.1e100.net (74.125.21.94): icmp_seq=1 ttl=127 time=86.5 ms
 64 bytes from yv-in-f94.1e100.net (74.125.21.94): icmp_seq=2 ttl=127 time=38.4 ms
