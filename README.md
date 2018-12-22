@@ -145,6 +145,9 @@ Network default started
 
 Network provision started
 
+
+network generated ...
+
 default network
  default              active     no            yes
 provision network
@@ -157,7 +160,8 @@ If vm instance existing, will delete it at first.
 
 ```
 # /usr/share/dckvm/kvm_vm_create.sh
-testvm existing, will delete it now
+testvm existing, will delete it now ...
+
 Domain testvm destroyed
 
 Domain testvm has been undefined
@@ -175,11 +179,11 @@ Domain testvm defined from /usr/share/dckvm/testvm.xml
 [   0.0] Examining the guest ...
 [   4.7] Setting a random seed
 [   4.7] Setting the hostname: testvm
-[   4.7] Installing firstboot script: /usr/share/dckvm/kvm_post_testvm.sh
+[   4.8] Installing firstboot script: /usr/share/dckvm/kvm_post_testvm.sh
 [   4.9] Finishing off
 Domain testvm started
 
-testvm is running now
+testvm is launching now ...
 
 virsh list --all
 virsh console testvm 
