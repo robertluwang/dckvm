@@ -53,7 +53,10 @@ virt-install --import --name $VM \
 
 # fix driver type issue, it misidentifies raw for qcow2 disk driver type
 
-rm -f $dckvm/$VM.xml
+if [ -f $dckvm/$VM.xml ];then
+        rm -f $dckvm/$VM.xml
+fi
+
 virsh dumpxml $VM > $dckvm/$VM.xml
 sed -i "s/driver name='qemu' type='raw'/driver name='qemu' type='qcow2'/g" $dckvm/$VM.xml
 virsh undefine $VM
