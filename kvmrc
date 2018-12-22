@@ -13,11 +13,11 @@ IMGPATH=/var/lib/libvirt/boot
 
 OS_VERSION=centos-7.6
 OS_VARIANT=rhel7
-VM=undercloud
+VM=testvm
 RAM=2048
-DISKSIZE=80G
+DISKSIZE=20G
 VCPU=1
-VM_HOSTNAME=undercloud
+VM_HOSTNAME=testvm
 TZ=America/New_York
 ROOTPW=shroot
 
