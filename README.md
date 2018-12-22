@@ -10,11 +10,11 @@ net-provision.xml - provision network config file sample
 
 kvm_post_template - kvm vm post script template, used to geneate new post script, mainly fixing nic issue in vm instance
 
-kvm_image_build.sh - build bootable kvm image
+kvm_image_build.sh - build bootable kvm image base template
 
 kvm_net_setup.sh - kvm network interface setup
 
-kvm_vm_create.sh - launch kvm vm instance using bootable kvm image
+kvm_vm_create.sh - quickly launch kvm vm instance using bootable kvm image base template
 
 ## dckvm usage 
 
