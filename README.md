@@ -4,9 +4,9 @@ handy kvm tool from dreamcloud
 ## tool set
 kvmrc - env setting for vm/image and networking (NAT and provision/hostonly)
 
-net-default-nat.xml - default nat network config file
+net-default.xml - default nat network config file sample
 
-net-provision.xml - provision network config file
+net-provision.xml - provision network config file sample
 
 kvm_post_template - kvm vm post script template, used to geneate new post script, mainly fixing nic issue in vm instance
 
