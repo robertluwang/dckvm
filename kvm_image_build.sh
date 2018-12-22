@@ -10,9 +10,17 @@ source $dckvm/kvmrc
 
 virt-builder $OS_VERSION \
 --format qcow2 \
---size $DISKSIZE -o $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2 \
+--size ${DISKSIZE}G -o $IMGPATH/${OS_VERSION}-${DISKSIZE}G.qcow2 \
 --network --timezone $TZ \
 --root-password password:$ROOTPW \
 --firstboot-command "sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config; systemctl stop NetworkManager; systemctl disable NetworkManager"
 
-virt-sysprep -a $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2
+echo
+virt-sysprep --format qcow2 -a $IMGPATH/${OS_VERSION}-${DISKSIZE}G.qcow2
+
+echo
+echo base image template generated ...
+echo
+qemu-img info $IMGPATH/${OS_VERSION}-${DISKSIZE}G.qcow2
+echo
+
