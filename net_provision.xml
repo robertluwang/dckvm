@@ -1,11 +1,10 @@
 <network>
   <name>provision</name>
-  <uuid>e79f9c5f-1626-4192-a05e-786dc709bb5a</uuid>
   <bridge name='virbr1' stp='on' delay='0'/>
-  <mac address='52:54:00:4a:f5:e8'/>
-  <ip address='192.168.126.2' netmask='255.255.255.0'>
+  <ip address='192.168.126.1' netmask='255.255.255.0'>
     <dhcp>
       <range start='192.168.126.100' end='192.168.126.254'/>
     </dhcp>
   </ip>
 </network>
+
