@@ -33,11 +33,11 @@ fi
 
 # prepare bootable image
 
-if [ -f $IMGPATH/${OS_VERSION}-$DISKSIZE.img ]; then
-    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.img $DISKPATH/$VM.qcow2
+if [ -f $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2 ]; then
+    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2 $DISKPATH/$VM.qcow2
 else
     sh $dckvm/kvm_image_build.sh
-    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.img $IMGPATH/$VM.qcow2
+    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2 $IMGPATH/$VM.qcow2
 fi
 
 # create new vm by importing bootable image
@@ -50,6 +50,14 @@ virt-install --import --name $VM \
 --network network=$NET_PROVISION \
 --nographics --serial=pty --os-type=linux --os-variant $OS_VARIANT \
 --noautoconsole --noreboot
+
+# fix driver type issue, it misidentifies raw for qcow2 disk driver type
+
+rm -f $dckvm/$VM.xml
+virsh dumpxml $VM > $dckvm/$VM.xml
+sed -i "s/driver name='qemu' type='raw'/driver name='qemu' type='qcow2'/g" $VM.xml
+virsh undefine $VM
+virsh define $dckvm/$VM.xml
 
 # generate kvm post script for new vm
 
