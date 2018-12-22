@@ -13,9 +13,10 @@ source $dckvm/kvmrc
 vmstate=`virsh domstate $VM|awk '{print $1}'`
 
 if [ ! -z $vmstate ];then
+    echo
+    echo $VM existing, will delete it now ...
+    echo
 
-    echo $VM existing, will delete it now 
-    
     if [ $vmstate == "running" ];then
         virsh destroy $VM
         virsh undefine $VM
@@ -28,16 +29,30 @@ if [ ! -z $vmstate ];then
     echo $VM deleted, will create it now
 
 else
-    echo $VM not existing, will create it now
+    echo
+    echo $VM not existing, will create it now ...
+    echo
 fi
 
 # prepare bootable image
 
-if [ -f $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2 ]; then
-    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2 $DISKPATH/$VM.qcow2
+if [ -f $IMGPATH/${OS_VERSION}-${DISKSIZE}G.qcow2 ]; then
+    cp $IMGPATH/${OS_VERSION}-${DISKSIZE}G.qcow2 $DISKPATH/$VM.qcow2
 else
     sh $dckvm/kvm_image_build.sh
-    cp $IMGPATH/${OS_VERSION}-$DISKSIZE.qcow2 $IMGPATH/$VM.qcow2
+    cp $IMGPATH/${OS_VERSION}-${DISKSIZE}G.qcow2 $DISKPATH/$VM.qcow2
+fi
+
+# either nat or provision network not ready, reset network
+net_nat=`virsh net-list --all|grep $NET_NAT|awk '{print $1}'`
+net_pro=`virsh net-list --all|grep $NET_PROVISION|awk '{print $1}'`
+
+if [ -z "$net_nat" ] || [ -z "$net_pro" ]; then
+    echo
+    echo network not ready, reset $NET_NAT and $NET_PROVISION now ...
+    echo
+
+    $dckvm/kvm_net_setup.sh
 fi
 
 # create new vm by importing bootable image
@@ -45,13 +60,13 @@ fi
 virt-install --import --name $VM \
 --ram $RAM \
 --vcpu $VCPU \
---disk path=$DISKPATH/$VM.qcow2,device=disk,format=qcow2 \
+--disk path=$DISKPATH/$VM.qcow2,format=qcow2,bus=virtio \
 --network network=$NET_NAT \
 --network network=$NET_PROVISION \
 --nographics --serial=pty --os-type=linux --os-variant $OS_VARIANT \
 --noautoconsole --noreboot
 
-# fix driver type issue, it misidentifies raw for qcow2 disk driver type
+# fix driver type issue
 
 if [ -f $dckvm/$VM.xml ];then
         rm -f $dckvm/$VM.xml
@@ -78,4 +93,7 @@ virt-customize --hostname ${VM_HOSTNAME} --firstboot $dckvm/kvm_post_$VM.sh -d $
 
 virsh start $VM
 
-echo $VM is running now
+echo
+echo $VM is launching now ...
+echo
+
