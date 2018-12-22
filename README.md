@@ -113,7 +113,6 @@ NET_PROVISION_DHCP_END=192.168.126.254
 ```
 ### kvm network interface setup 
 
-### run the kvm_vm_create.sh
 ```
 # /usr/share/dckvm/kvm_net_setup.sh
 Network default destroyed
