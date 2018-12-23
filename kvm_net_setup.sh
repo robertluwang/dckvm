@@ -64,6 +64,9 @@ virsh net-define $dckvm/net_$NET_PROVISION.xml
 virsh net-start $NET_NAT
 virsh net-start $NET_PROVISION
 
+virsh net-autostart $NET_NAT
+virsh net-autostart $NET_PROVISION
+
 # show up the network
 echo
 echo network generated ...
