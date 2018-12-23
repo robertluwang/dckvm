@@ -10,7 +10,7 @@ source $dckvm/kvmrc
 
 virt-install --name $VM \
 --nographics \
---location /var/lib/libvirt/boot/CentOS-7-x86_64-Minimal-1708.iso \
+--location $IMGPATH/$ISO \
 --initrd-inject $dckvm/$KS \
 --extra-args "ks=file:/$KS console=ttyS0" \
 --memory=$RAM --vcpus=$VCPU \
