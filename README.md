@@ -221,7 +221,7 @@ tmpfs           184M     0  184M   0% /run/user/0
     inet6 fe80::5054:ff:fed0:b990/64 scope link
        valid_lft forever preferred_lft forever
 
-# iip r
+# ip r
 default via 192.168.122.1 dev eth0
 169.254.0.0/16 dev eth0 scope link metric 1002
 169.254.0.0/16 dev eth1 scope link metric 1003
