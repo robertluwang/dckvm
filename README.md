@@ -1,5 +1,5 @@
 # dckvm
-handy kvm tool from dreamcloud
+a handy kvm tool from dreamcloud
 
 ## tool set
 kvmrc - env setting for vm/image and networking (NAT and provision/hostonly)
