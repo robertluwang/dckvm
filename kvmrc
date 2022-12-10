@@ -2,7 +2,7 @@
 # env setting for dreamcloud kvm tool 
 # Robert Wang @github.com/robertluwang
 # Dec 2018
-#
+# Dec 10, 2022 update NET_NIC 
 # env
 
 DISKPATH=/var/lib/libvirt/images
@@ -14,10 +14,10 @@ KS=centos7-ks.cfg
 # kvm vm 
 
 OS_VERSION=centos-7.6
-OS_VARIANT=rhel7
+OS_VARIANT=rhl7
 VM=testvm-ks
 RAM=2048
-DISKSIZE=20
+DISKSIZE=10
 VCPU=1
 VM_HOSTNAME=testvm
 TZ=America/New_York
@@ -39,4 +39,7 @@ NET_PROVISION_IP=192.168.126.10
 NET_PROVISION_MASK=255.255.255.0
 NET_PROVISION_DHCP_START=192.168.126.100
 NET_PROVISION_DHCP_END=192.168.126.254
+NET_NIC=ens
+NET_NIC1=2
+NET_NIC2=3
 

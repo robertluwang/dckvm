@@ -3,6 +3,7 @@
 # launch kvm vm instance using bootable kvm image 
 # Robert Wang @github.com/robertluwang
 # Dec 17, 2018
+# Dec 10, 2022 update NIC name
 
 dckvm=`dirname "$0"`
 
@@ -80,6 +81,9 @@ virsh define $dckvm/$VM.xml
 # generate kvm post script for new vm
 
 cp $dckvm/kvm_post_template $dckvm/kvm_post_$VM.sh
+sed -i "s/_nic_/$NET_NIC/g" $dckvm/kvm_post_$VM.sh
+sed -i "s/_nic1_/$NET_NIC$NET_NIC1/g" $dckvm/kvm_post_$VM.sh
+sed -i "s/_nic2_/$NET_NIC$NET_NIC2/g" $dckvm/kvm_post_$VM.sh
 
 sed -i "s/_nat_ip_/$NET_NAT_IP/g" $dckvm/kvm_post_$VM.sh
 sed -i "s/_nat_mask_/$NET_NAT_MASK/g" $dckvm/kvm_post_$VM.sh

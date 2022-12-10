@@ -3,12 +3,13 @@
 # kvm vm post script template 
 # Robert Wang @github.com/robertluwang
 # Dec 17, 2018
+# Dec 10, 2022 update NIC name
 
-rm -f /etc/sysconfig/network-scripts/ifcfg-eth*
+rm -f /etc/sysconfig/network-scripts/ifcfg-_nic_*
 
-cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-eth0
-DEVICE=eth0
-NAME="eth0"
+cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-_nic1_
+DEVICE=_nic1_
+NAME="_nic1_"
 ONBOOT="yes"
 BOOTPROTO="none"
 TYPE="Ethernet"
@@ -19,15 +20,14 @@ DNS1=_nat_if_
 DNS2=8.8.8.8
 EOF
 
-cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-eth1
-DEVICE=eth1
-NAME="eth1"
+cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-_nic2_
+DEVICE=_nic2_
+NAME="_nic2_"
 ONBOOT="yes"
 BOOTPROTO="none"
 TYPE="Ethernet"
 IPADDR=_provision_ip_
 NETMASK=_provision_mask_
 EOF
-
 
 systemctl restart network
